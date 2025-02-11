@@ -6,6 +6,7 @@ import { SearchBarInput } from "@/components/form/SearchBar";
 import { ThinContainer } from "@/components/layout/ThinContainer";
 import { useSlashFocus } from "@/components/player/hooks/useSlashFocus";
 import { HeroTitle } from "@/components/text/HeroTitle";
+import { Paragraph } from "@/components/utils/Text";
 import { useIsTV } from "@/hooks/useIsTv";
 import { useRandomTranslation } from "@/hooks/useRandomTranslation";
 import { useSearchQuery } from "@/hooks/useSearchQuery";
@@ -77,9 +78,19 @@ export function HeroPart({ setIsSticky, searchParams }: HeroPartProps) {
     <ThinContainer>
       <div className="mt-44 space-y-16 text-center">
         <div className="relative z-10 mb-16">
-          {isTV && search.length > 0 ? null : (
-            <HeroTitle className="mx-auto max-w-md">{title}</HeroTitle>
-          )}
+          <h1 className="text-4xl font-bold text-white">P-Stream Beta</h1>
+          <Paragraph className="mt-4 text-white">
+            This is the experimental page for P-Stream. If you do not wish to
+            test features please go to the{" "}
+            <a
+              href="https://pstream.org"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-video-primary text-type-link hover:text-type-linkHover"
+            >
+              main page.
+            </a>
+          </Paragraph>
         </div>
         <div className="relative h-20 z-30">
           <Sticky
