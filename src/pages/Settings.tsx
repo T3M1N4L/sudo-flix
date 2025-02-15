@@ -131,9 +131,6 @@ export function SettingsPage() {
   const backendUrlSetting = useAuthStore((s) => s.backendUrl);
   const setBackendUrl = useAuthStore((s) => s.setBackendUrl);
 
-  const febboxToken = useAuthStore((s) => s.febboxToken);
-  const setFebboxToken = useAuthStore((s) => s.setFebboxToken);
-
   const enableThumbnails = usePreferencesStore((s) => s.enableThumbnails);
   const setEnableThumbnails = usePreferencesStore((s) => s.setEnableThumbnails);
 
@@ -171,7 +168,6 @@ export function SettingsPage() {
     decryptedName,
     proxySet,
     backendUrlSetting,
-    febboxToken,
     account?.profile,
     enableThumbnails,
     enableAutoplay,
@@ -220,14 +216,12 @@ export function SettingsPage() {
       if (
         state.appLanguage.changed ||
         state.theme.changed ||
-        state.proxyUrls.changed ||
-        state.febboxToken.changed
+        state.proxyUrls.changed
       ) {
         await updateSettings(backendUrl, account, {
           applicationLanguage: state.appLanguage.state,
           applicationTheme: state.theme.state,
           proxyUrls: state.proxyUrls.state?.filter((v) => v !== "") ?? null,
-          febboxToken: state.febboxToken.state,
         });
       }
       if (state.deviceName.changed) {
@@ -256,7 +250,6 @@ export function SettingsPage() {
     setSubStyling(state.subtitleStyling.state);
     setProxySet(state.proxyUrls.state?.filter((v) => v !== "") ?? null);
     setEnableSourceOrder(state.enableSourceOrder.state);
-    setFebboxToken(state.febboxToken.state);
 
     if (state.profile.state) {
       updateProfile(state.profile.state);
@@ -277,7 +270,6 @@ export function SettingsPage() {
     account,
     backendUrl,
     setEnableThumbnails,
-    setFebboxToken,
     state,
     setEnableAutoplay,
     setEnableDiscover,
@@ -360,8 +352,6 @@ export function SettingsPage() {
             setBackendUrl={state.backendUrl.set}
             proxyUrls={state.proxyUrls.state}
             setProxyUrls={state.proxyUrls.set}
-            febboxToken={state.febboxToken.state}
-            setFebboxToken={state.febboxToken.set}
           />
         </div>
       </SettingsLayout>

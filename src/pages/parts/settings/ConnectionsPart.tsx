@@ -22,11 +22,6 @@ interface BackendEditProps {
   setBackendUrl: Dispatch<SetStateAction<string | null>>;
 }
 
-interface FebboxTokenProps {
-  febboxToken: string | null;
-  setFebboxToken: Dispatch<SetStateAction<string | null>>;
-}
-
 function ProxyEdit({ proxyUrls, setProxyUrls }: ProxyEditProps) {
   const { t } = useTranslation();
   const add = useCallback(() => {
@@ -174,54 +169,7 @@ function BackendEdit({ backendUrl, setBackendUrl }: BackendEditProps) {
   );
 }
 
-function FebboxTokenEdit({ febboxToken, setFebboxToken }: FebboxTokenProps) {
-  const { t } = useTranslation();
-
-  return (
-    <SettingsCard>
-      <div className="flex justify-between items-center gap-4">
-        <div className="my-3">
-          <p className="text-white font-bold mb-3">
-            {t("settings.connections.febbox.label", "Febbox UI Token")}
-          </p>
-          <p className="max-w-[20rem] font-medium">
-            <Trans i18nKey="settings.connections.febbox.description">
-              To get your UI token, go to{" "}
-              <MwLink to="https://febbox.com">febbox.com</MwLink>, log in with
-              Google, open DevTools, go to Application tab, Cookies, and copy
-              the &quot;ui&quot; cookie.
-            </Trans>
-          </p>
-        </div>
-        <div>
-          <Toggle
-            onClick={() => setFebboxToken((s) => (s === null ? "" : null))}
-            enabled={febboxToken !== null}
-          />
-        </div>
-      </div>
-      {febboxToken !== null ? (
-        <>
-          <Divider marginClass="my-6 px-8 box-content -mx-8" />
-          <p className="text-white font-bold mb-3">
-            {t("settings.connections.febbox.tokenLabel", "Token")}
-          </p>
-          <AuthInputBox
-            onChange={(newToken) => {
-              setFebboxToken(newToken);
-            }}
-            value={febboxToken ?? ""}
-            placeholder="eyABCdE..."
-          />
-        </>
-      ) : null}
-    </SettingsCard>
-  );
-}
-
-export function ConnectionsPart(
-  props: BackendEditProps & ProxyEditProps & FebboxTokenProps,
-) {
+export function ConnectionsPart(props: BackendEditProps & ProxyEditProps) {
   const { t } = useTranslation();
   return (
     <div>
@@ -235,10 +183,6 @@ export function ConnectionsPart(
         <BackendEdit
           backendUrl={props.backendUrl}
           setBackendUrl={props.setBackendUrl}
-        />
-        <FebboxTokenEdit
-          febboxToken={props.febboxToken}
-          setFebboxToken={props.setFebboxToken}
         />
       </div>
     </div>
