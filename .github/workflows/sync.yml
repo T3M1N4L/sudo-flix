@@ -3,22 +3,18 @@ name: Sync Fork
 on:
   schedule:
     - cron: '0 5 * * 3,6'
-  workflow_dispatch: # Allows manual triggering
+  workflow_dispatch: # on button click
 
 jobs:
   sync:
+
     runs-on: ubuntu-latest
 
     steps:
-      - name: Sync Fork with Upstream
-        uses: tgymnich/fork-sync@v2.0
+      - uses: tgymnich/fork-sync@v2.0
         with:
           token: ${{ secrets.PERSONAL_TOKEN }}
-          owner: Pasithea0 # Upstream repository owner
-          repo: smov # Upstream repository name
-          base: production # The branch in your fork to update
-          head: production # The branch from upstream to pull from
-          merge_method: merge # Options: merge, rebase, squash
-          pr_title: "🔄 Fork Sync: Production Branch"
-          pr_message: "This PR syncs changes from upstream/production into forked production."
-          auto_approve: true # Auto-approves if needed
+          owner: Pasithea0
+          repo: smov	
+          base: production
+          head: production
