@@ -1,36 +1,24 @@
-name: Sync Production Branch
+name: Sync Fork
 
 on:
   schedule:
-    - cron: '0 5 * * 3,6'  # At 05:00 UTC on Wednesday and Saturday
-  workflow_dispatch:  # Allows manual trigger
+    - cron: '0 * * * *' # Runs every hour
+  workflow_dispatch: # Allows manual triggering
 
 jobs:
   sync:
     runs-on: ubuntu-latest
+
     steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v4
+      - name: Sync Fork with Upstream
+        uses: tgymnich/fork-sync@v2.0
         with:
-          persist-credentials: false
-          fetch-depth: 0  # Fetch all branches
-
-      - name: Configure Git
-        run: |
-          git config --global user.name "github-actions[bot]"
-          git config --global user.email "github-actions[bot]@users.noreply.github.com"
-
-      - name: Add Upstream Remote
-        run: |
-          git remote add upstream https://github.com/Pasithea0/smov.git
-          git fetch upstream --prune
-
-      - name: Sync Production Branch
-        run: |
-          git fetch upstream --prune
-          git checkout production || git checkout -b production
-          git pull upstream production  # Ensure production is up-to-date
-          git merge upstream/production --no-edit || echo "No new changes to merge"
-          git checkout --theirs .
-          git commit -am "Auto-resolve merge conflict in production" || echo "No conflicts to resolve"
-          git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git production
+          token: ${{ secrets.PERSONAL_TOKEN }}
+          owner: Pasithea0 # Upstream repository owner
+          repo: smov # Upstream repository name
+          base: production # The branch in your fork to update
+          head: production # The branch from upstream to pull from
+          merge_method: merge # Options: merge, rebase, squash
+          pr_title: "🔄 Fork Sync: Production Branch"
+          pr_message: "This PR syncs changes from upstream/production into forked production."
+          auto_approve: true # Auto-approves if needed
