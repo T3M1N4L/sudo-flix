@@ -1,4 +1,4 @@
-name: Auto Sync Fork
+name: Sync Production Branch
 
 on:
   schedule:
@@ -25,25 +25,12 @@ jobs:
           git remote add upstream https://github.com/Pasithea0/smov.git
           git fetch upstream --prune
 
-      - name: Sync All Branches
+      - name: Sync Production Branch
         run: |
-          # Fetch latest changes from upstream
           git fetch upstream --prune
-
-          # Loop through all remote branches
-          for branch in $(git branch -r | grep -v '\->' | sed 's/upstream\///'); do
-            git checkout "$branch" || git checkout -b "$branch"  # Create branch if it doesn't exist
-            git pull upstream "$branch"  # Pull changes from upstream to ensure it's up-to-date
-
-            # Attempt the merge and automatically handle conflicts (accept theirs)
-            git merge upstream/"$branch" --no-edit || echo "No new changes to merge"
-
-            # Resolve conflicts by accepting the upstream changes automatically
-            git checkout --theirs .  # Accept upstream version of conflicting files
-
-            # Commit if conflicts were resolved
-            git commit -am "Auto-resolve merge conflict in $branch" || echo "No conflicts to resolve"
-
-            # Push the changes back to the fork
-            git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git "$branch"
-          done
+          git checkout production || git checkout -b production
+          git pull upstream production  # Ensure production is up-to-date
+          git merge upstream/production --no-edit || echo "No new changes to merge"
+          git checkout --theirs .
+          git commit -am "Auto-resolve merge conflict in production" || echo "No conflicts to resolve"
+          git push https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/${{ github.repository }}.git production
