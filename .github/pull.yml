@@ -1,0 +1,5 @@
+version: "1"
+rules:
+  - base: production
+    upstream: Pasithea0:production # change `wei` to the owner of upstream repo
+    mergeMethod: hardreset
