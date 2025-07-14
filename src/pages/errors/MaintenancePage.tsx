@@ -24,7 +24,7 @@ function MaintenancePage({ onHomeButtonClick }: MaintenancePageProps) {
       <Helmet>
         <title>{t("downtimeNotice.title")}</title>
       </Helmet>
-      <div className="flex h-full flex-1 flex-col items-center justify-center p-5 text-center">
+      <div className="flex h-full flex-1 flex-col items-center justify-center p-5 text-center z-[9999]">
         <ErrorLayout>
           <ErrorContainer>
             <IconPill icon={Icons.CIRCLE_EXCLAMATION}>
