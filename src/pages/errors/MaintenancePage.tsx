@@ -79,7 +79,7 @@ function MaintenancePage({ onHomeButtonClick }: MaintenancePageProps) {
                 </a>
               </span>
             </div>
-            <div className="flex justify-center mt-12">
+            <div className="flex justify-center mt-6">
               This page is temporary. It will be removed in a few days and
               automatically redirect to the new domain. DOWNLOAD YOUR DATA WHILE
               YOU CAN!
