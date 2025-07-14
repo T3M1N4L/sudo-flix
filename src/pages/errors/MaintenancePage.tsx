@@ -5,10 +5,11 @@ import { Button } from "@/components/buttons/Button";
 import { Icons } from "@/components/Icon";
 import { IconPill } from "@/components/layout/IconPill";
 import { Navigation } from "@/components/layout/Navigation";
+import { SolidSettingsCard } from "@/components/layout/SettingsCard";
 import { Title } from "@/components/text/Title";
-import { Paragraph } from "@/components/utils/Text";
+import { Heading3, Paragraph } from "@/components/utils/Text";
 import { ErrorContainer, ErrorLayout } from "@/pages/layouts/ErrorLayout";
-import { maintenanceTime } from "@/setup/App";
+import { conf } from "@/utils/setup/config";
 
 type MaintenancePageProps = {
   onHomeButtonClick: () => void;
@@ -26,20 +27,57 @@ function MaintenancePage({ onHomeButtonClick }: MaintenancePageProps) {
       <div className="flex h-full flex-1 flex-col items-center justify-center p-5 text-center">
         <ErrorLayout>
           <ErrorContainer>
-            <IconPill icon={Icons.WARNING}>
-              {t("downtimeNotice.badge")}
+            <IconPill icon={Icons.CIRCLE_EXCLAMATION}>
+              P-Stream has a new domain!
             </IconPill>
             <Title>{t("downtimeNotice.title")}</Title>
-            <Paragraph>{t("downtimeNotice.message")}</Paragraph>
-            <span className="font-bold text-white">{maintenanceTime}</span>
-            <div className="flex gap-3">
+            <Paragraph>
+              You may sign in with your existing account on the new domain!
+            </Paragraph>
+            <div className="flex justify-center mb-12">
               <Button
-                onClick={onHomeButtonClick}
                 theme="purple"
-                className="mt-6"
+                onClick={() => {
+                  window.location.href = "https://pstream.mov";
+                }}
               >
-                {t("downtimeNotice.goHome")}
+                Go to new domain (pstream.mov)
               </Button>
+            </div>
+            <SolidSettingsCard
+              paddingClass="px-6 py-8"
+              className="flex flex-col h-full"
+            >
+              <div className="flex-grow">
+                <Heading3>Local data is missing!</Heading3>
+                <p className="text-type-text mt-3">
+                  If you did not have an account, you can download your data and
+                  upload it to the new domain.
+                </p>
+              </div>
+              <div className="mt-6 flex justify-center">
+                <Button
+                  theme="purple"
+                  onClick={() => {
+                    window.location.href = "/migration/download";
+                  }}
+                >
+                  Download my data
+                </Button>
+              </div>
+            </SolidSettingsCard>
+            <div className="flex justify-center mt-12">
+              Help is available on the{" "}
+              <span className="text-white">
+                <a
+                  href={conf().DISCORD_LINK}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="text-type-link"
+                >
+                  Discord!
+                </a>
+              </span>
             </div>
           </ErrorContainer>
         </ErrorLayout>

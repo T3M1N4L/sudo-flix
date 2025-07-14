@@ -154,39 +154,6 @@ export function Navigation(props: NavigationProps) {
                   navigation
                 />
               </a>
-              {!enableLowPerformanceMode &&
-                (window.location.pathname !== "/discover" ? (
-                  <a
-                    onClick={() => handleClick("/discover")}
-                    rel="noreferrer"
-                    className="text-xl text-white tabbable rounded-full backdrop-blur-lg"
-                  >
-                    <IconPatch
-                      icon={Icons.RISING_STAR}
-                      clickable
-                      downsized
-                      navigation
-                    />
-                  </a>
-                ) : (
-                  <a
-                    onClick={() => handleClick("/")}
-                    rel="noreferrer"
-                    className="text-lg text-white tabbable rounded-full backdrop-blur-lg"
-                  >
-                    <IconPatch
-                      icon={Icons.SEARCH}
-                      clickable
-                      downsized
-                      navigation
-                    />
-                  </a>
-                ))}
-            </div>
-            <div className="relative pointer-events-auto">
-              <LinksDropdown>
-                {loggedIn ? <UserAvatar withName /> : <NoUserAvatar />}
-              </LinksDropdown>
             </div>
           </div>
         </div>
